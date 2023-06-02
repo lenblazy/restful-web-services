@@ -1,5 +1,7 @@
 package com.lenibonje.rest.webservices.restfulwebservices.user;
 
+import jakarta.validation.constraints.Past;
+import jakarta.validation.constraints.Size;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -9,7 +11,11 @@ import java.util.List;
 public class User {
 
     private Integer userId;
+
+    @Size(min=2, message = "name should have at least 2 characters")
     private String username;
+
+    @Past(message = "birth date should be in the past")
     private LocalDate birthDate;
 
     public User(Integer userId, String username, LocalDate birthDate) {
