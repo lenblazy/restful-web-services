@@ -1,11 +1,7 @@
 package com.lenibonje.rest.webservices.restfulwebservices.user;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
@@ -32,6 +28,11 @@ public class UserResource {
             throw new UserNotFoundException("id: " + id + " not found");
         }
         return user;
+    }
+
+    @DeleteMapping(path = "/users/{id}")
+    public void deleteUser(@PathVariable int id) {
+        userDaoService.deleteById(id);
     }
 
     //POST /users
