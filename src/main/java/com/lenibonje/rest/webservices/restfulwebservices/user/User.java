@@ -1,7 +1,7 @@
 package com.lenibonje.rest.webservices.restfulwebservices.user;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.annotation.Generated;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -16,9 +16,13 @@ import java.util.List;
 @Entity(name = "user_detail")
 public class User {
 
+    protected User() {
+    }
+
     @Id
     @GeneratedValue
-    private Integer userId;
+    @Column(name = "user_id")
+    private Integer id;
 
     @Size(min=2, message = "name should have at least 2 characters")
     @JsonProperty("user_name")
@@ -29,17 +33,17 @@ public class User {
     private LocalDate birthDate;
 
     public User(Integer userId, String username, LocalDate birthDate) {
-        this.userId = userId;
+        this.id = userId;
         this.username = username;
         this.birthDate = birthDate;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public Integer getId() {
+        return id;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getUsername() {
@@ -61,7 +65,7 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "userId=" + userId +
+                "userId=" + id +
                 ", username='" + username + '\'' +
                 ", birthDate=" + birthDate +
                 '}';
