@@ -1,6 +1,10 @@
 package com.lenibonje.rest.webservices.restfulwebservices.user;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.annotation.Generated;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
 import org.springframework.stereotype.Component;
@@ -9,8 +13,11 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity(name = "user_detail")
 public class User {
 
+    @Id
+    @GeneratedValue
     private Integer userId;
 
     @Size(min=2, message = "name should have at least 2 characters")
