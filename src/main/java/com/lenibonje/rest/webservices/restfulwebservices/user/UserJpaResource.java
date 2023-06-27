@@ -12,6 +12,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
@@ -57,6 +58,19 @@ public class UserJpaResource {
         return user.get().getPosts();
     }
 
+    @GetMapping(path = "/jpa/users/{id}/posts/{post_id}")
+    public Post retrieveSinglePost(@PathVariable int id, @PathVariable int post_id) {
+        Optional<User> user = repository.findById(id);
+        if (user.isEmpty()) throw new UserNotFoundException("id: " + id + " not found");
+
+        Optional<Post> post = user.get().getPosts().stream()
+                .filter(it -> it.getId() == post_id).findFirst();
+
+        if (post.isEmpty()) throw new PostNotFoundException("id: " + id + " not found");
+
+        return post.get();
+    }
+
 
     //POST /users
     @PostMapping("/jpa/users")
@@ -85,6 +99,7 @@ public class UserJpaResource {
 
         return ResponseEntity.created(location).build();
     }
+
 
 
 }
