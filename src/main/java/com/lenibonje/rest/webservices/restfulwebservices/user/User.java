@@ -1,10 +1,8 @@
 package com.lenibonje.rest.webservices.restfulwebservices.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
 import org.springframework.stereotype.Component;
@@ -19,9 +17,9 @@ public class User {
     protected User() {
     }
 
+
     @Id
     @GeneratedValue
-    @Column(name = "user_id")
     private Integer id;
 
     @Size(min=2, message = "name should have at least 2 characters")
@@ -32,10 +30,23 @@ public class User {
     @JsonProperty("birth_date")
     private LocalDate birthDate;
 
+    @OneToMany(mappedBy ="user")
+    @JsonIgnore
+    private List<Post> posts;
+
     public User(Integer userId, String username, LocalDate birthDate) {
         this.id = userId;
         this.username = username;
         this.birthDate = birthDate;
+    }
+
+
+    public List<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
     }
 
     public Integer getId() {
